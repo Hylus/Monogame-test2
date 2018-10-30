@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimatedSprite.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="Bat.cs" />
     <Compile Include="Game1.cs" />

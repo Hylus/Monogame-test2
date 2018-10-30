@@ -60,6 +60,8 @@ namespace PingPong
             var batTexture2 = Content.Load<Texture2D>("paddle2a");
             var ballTexture = Content.Load<Texture2D>("ball1");
 
+            var ballAnimTexture = Content.Load<Texture2D>("ball-anim");
+
             _score = new Score(Content.Load<SpriteFont>("basicFont"));
 
             _sprites = new List<Sprite>()
@@ -83,10 +85,15 @@ namespace PingPong
             Down = Keys.Down,
           }
         },
-        new Ball(ballTexture)
+        //new Ball(ballTexture)
+        //{
+        //  Position = new Vector2((ScreenWidth / 2) - (ballTexture.Width / 2), (ScreenHeight / 2) - (ballTexture.Height / 2)),
+        //  Score = _score,
+        //}
+        new Ball(ballAnimTexture,5,16)
         {
-          Position = new Vector2((ScreenWidth / 2) - (ballTexture.Width / 2), (ScreenHeight / 2) - (ballTexture.Height / 2)),
-          Score = _score,
+            Position = new Vector2((ScreenWidth / 2) - (32), (ScreenHeight / 2) - (32)),
+            Score = _score,
         }
       };
 

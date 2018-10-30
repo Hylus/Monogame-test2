@@ -7,6 +7,10 @@ namespace PingPong
 {
     public class Bat : Sprite
     {
+        int timeSinceLastFrame = 0;
+        int shiningMiliseconds = 300;
+
+
         public Bat(Texture2D texture)
           : base(texture)
         {
@@ -25,6 +29,23 @@ namespace PingPong
             Position.Y = MathHelper.Clamp(Position.Y, 0, Game1.ScreenHeight - _texture.Height);
 
             Velocity = Vector2.Zero;
+
+            if (Shining)
+            {
+                ShineBat(gameTime);                
+            }
+        }
+
+        void ShineBat(GameTime gameTime)
+        {
+            base.Color = Color.Yellow;
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (timeSinceLastFrame > shiningMiliseconds)
+            {
+                timeSinceLastFrame -= shiningMiliseconds;
+                base.Color = Color.White;
+                base.Shining = false;
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace PingPong
 {
 
-    public class Ball : Sprite
+    public class Ball : AnimatedSprite
     {        
         private Vector2? _startPosition = null;
         private float? _startSpeed;
@@ -14,14 +14,14 @@ namespace PingPong
 
         public Score Score;
 
-        public Ball(Texture2D texture)
-          : base(texture)
+        public Ball(Texture2D texture, int rows, int columns)
+          : base(texture,rows,columns,9,16)
         {
             Speed = 3f;
         }
 
         public override void Update(GameTime gameTime, List<Sprite> sprites)
-        {
+        {            
             if (_startPosition == null)
             {
                 _startPosition = Position;
@@ -45,11 +45,15 @@ namespace PingPong
                 {
                     this.Velocity.X = -this.Velocity.X;
                     Speed++;
+
+                    sprite.Shining = true;
                 }
                 if (this.Velocity.X < 0 && this.IsTouchingRight(sprite))
                 {
                     this.Velocity.X = -this.Velocity.X;
                     Speed++;
+
+                    sprite.Shining = true;
                 }
                 if (this.Velocity.Y > 0 && this.IsTouchingTop(sprite))
                     this.Velocity.Y = -this.Velocity.Y;
@@ -57,22 +61,31 @@ namespace PingPong
                     this.Velocity.Y = -this.Velocity.Y;
             }
 
-            if (Position.Y <= 0 || Position.Y + _texture.Height >= Game1.ScreenHeight)
+            if (Position.Y <= 0 || Position.Y + base._textureHeight >= Game1.ScreenHeight)
                 Velocity.Y = -Velocity.Y;
 
             if (Position.X <= 0)
             {
+                Kaboom();
                 Score.Score2++;
                 Restart();
             }
 
-            if (Position.X + _texture.Width >= Game1.ScreenWidth)
+            if (Position.X + base._textureWidth >= Game1.ScreenWidth)
             {
+                Kaboom();
                 Score.Score1++;
                 Restart();
             }
 
             Position += Velocity * Speed;
+
+            base.Update(gameTime, sprites);
+        }
+
+        void Kaboom()
+        {
+           
         }
 
         public void Restart()
